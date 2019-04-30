@@ -5,7 +5,7 @@
   "username": "graphql",
   "password": "password",
   "database": "graphql",
-  "synchronize": true,
+  "synchronize": false,
   "logging": false,
   "entities": [
     "build/entity/**/*.js"
@@ -20,5 +20,6 @@
     "entitiesDir": "src/entity",
     "migrationsDir": "src/migration",
     "subscribersDir": "src/subscriber"
-  }
+  },
+  "migrationsTableName": "typeorm_migrations"
 }
