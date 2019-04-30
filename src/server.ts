@@ -4,6 +4,7 @@ import { Container, Service } from 'typedi';
 import { ApolloServer } from 'apollo-server-express';
 import { buildSchema } from 'type-graphql';
 import { AuthorResolver } from './resolvers/AuthorResolver';
+import { BookResolver } from './resolvers/BookResolver';
 
 @Service()
 export class Server {
@@ -12,7 +13,7 @@ export class Server {
 
   private async applyMiddlewares(): Promise<void> {
     const schema = await buildSchema({
-      resolvers: [AuthorResolver],
+      resolvers: [AuthorResolver, BookResolver],
       container: Container,
     });
 
