@@ -18,9 +18,9 @@ export class AuthorBook extends BaseEntity {
   @JoinColumn({ name: 'author_id' })
   author!: Author;
 
-  @CreateDateColumn({type: 'timestamp'})
+  @CreateDateColumn({ type: 'timestamp' })
   createdAt!: Date;
 
-  @UpdateDateColumn({type: 'timestamp'})
+  @UpdateDateColumn({ type: 'timestamp' })
   updatedAt!: Date;
 }

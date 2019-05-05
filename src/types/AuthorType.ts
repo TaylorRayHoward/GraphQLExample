@@ -1,4 +1,5 @@
 import { Field, ObjectType } from 'type-graphql';
+import { BookType } from './BookType';
 
 @ObjectType()
 export class AuthorType {
@@ -15,4 +16,7 @@ export class AuthorType {
   fullName(): string {
     return `${this.firstName} ${this.lastName}`;
   }
+
+  @Field(type => [BookType])
+  books!: BookType[]
 }

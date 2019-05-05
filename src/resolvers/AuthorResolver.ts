@@ -1,7 +1,10 @@
 import { AuthorType } from '../types/AuthorType';
-import { Arg, Mutation, Query, Resolver } from 'type-graphql';
+import { Arg, FieldResolver, Mutation, Query, Resolver, Root } from 'type-graphql';
 import { Author } from '../entity/Author';
 import { AuthorInputType } from '../types/AuthorInputType';
+import { BookType } from '../types/BookType';
+import { Book } from '../entity/Book';
+import { AuthorBook } from '../entity/AuthorBook';
 
 @Resolver(AuthorType)
 export class AuthorResolver {
@@ -26,11 +29,17 @@ export class AuthorResolver {
   @Mutation(returns => AuthorType)
   async updateAuthor(@Arg('id') id: string, @Arg('authorData') data: AuthorInputType) {
     const author = await Author.findOne(id);
-    if(!author) {
+    if (!author) {
       throw new Error('Cannot find author');
     }
     author.lastName = data.lastName;
     author.firstName = data.firstName;
     return author.save();
+  }
+
+  @FieldResolver()
+  async books(@Root() book: BookType): Promise<Book[]> {
+    const authors = await AuthorBook.find({ where: { bookId: book.id }, relations: ['book'] });
+    return authors.map(a => a.book);
   }
 }
