@@ -1,4 +1,4 @@
-import { BaseEntity, PrimaryColumn, ManyToOne, JoinColumn, Entity } from 'typeorm';
+import { BaseEntity, PrimaryColumn, ManyToOne, JoinColumn, Entity, CreateDateColumn, UpdateDateColumn } from 'typeorm';
 import { Book } from './Book';
 import { Author } from './Author';
 
@@ -17,4 +17,10 @@ export class AuthorBook extends BaseEntity {
   @ManyToOne(type => Author, author => author.authorBooks, { primary: true })
   @JoinColumn({ name: 'author_id' })
   author!: Author;
+
+  @CreateDateColumn({type: 'timestamp'})
+  createdAt!: Date;
+
+  @UpdateDateColumn({type: 'timestamp'})
+  updatedAt!: Date;
 }
