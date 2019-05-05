@@ -1,4 +1,5 @@
 import { Field, ObjectType } from 'type-graphql';
+import { Author } from '../entity/Author';
 
 @ObjectType()
 export class BookType {
@@ -13,6 +14,9 @@ export class BookType {
 
   @Field()
   publishedAt!: Date;
+
+  @Field(type => [Author])
+  authors!: Author[];
 
   @Field()
   createdAt!: Date;
