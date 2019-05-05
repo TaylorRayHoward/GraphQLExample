@@ -14,9 +14,9 @@ export class Book extends BaseEntity {
   @Column()
   publishedAt!: Date;
 
-  @CreateDateColumn({type: 'timestamp without time zone'})
+  @CreateDateColumn({type: 'timestamp'})
   createdAt!: Date;
 
-  @UpdateDateColumn({type: 'timestamp without time zone'})
+  @UpdateDateColumn({type: 'timestamp'})
   updatedAt!: Date;
 }

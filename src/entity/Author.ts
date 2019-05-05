@@ -11,9 +11,9 @@ export class Author extends BaseEntity {
   @Column()
   lastName!: string;
 
-  @CreateDateColumn({type: 'timestamp without time zone'})
+  @CreateDateColumn({ type: 'timestamp' })
   createdAt!: Date;
 
-  @UpdateDateColumn({type: 'timestamp without time zone'})
+  @UpdateDateColumn({ type: 'timestamp' })
   updatedAt!: Date;
 }
