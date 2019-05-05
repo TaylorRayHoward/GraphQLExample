@@ -18,5 +18,11 @@ export class AuthorType {
   }
 
   @Field(type => [BookType])
-  books!: BookType[]
+  books!: BookType[];
+
+  @Field()
+  createdAt!: Date;
+
+  @Field()
+  updatedAt!: Date;
 }

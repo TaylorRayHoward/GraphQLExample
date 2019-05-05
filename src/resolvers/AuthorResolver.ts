@@ -38,8 +38,8 @@ export class AuthorResolver {
   }
 
   @FieldResolver()
-  async books(@Root() book: BookType): Promise<Book[]> {
-    const authors = await AuthorBook.find({ where: { bookId: book.id }, relations: ['book'] });
+  async books(@Root() author: BookType): Promise<Book[]> {
+    const authors = await AuthorBook.find({ where: { authorId: author.id }, relations: ['book'] });
     return authors.map(a => a.book);
   }
 }

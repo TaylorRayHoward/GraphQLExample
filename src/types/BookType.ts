@@ -12,5 +12,11 @@ export class BookType {
   isbn!: string;
 
   @Field()
-  publishedAt!: Date
+  publishedAt!: Date;
+
+  @Field()
+  createdAt!: Date;
+
+  @Field()
+  updatedAt!: Date;
 }
