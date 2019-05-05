@@ -1,4 +1,4 @@
-import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { BaseEntity, Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
 
 @Entity()
 export class Book extends BaseEntity {
@@ -12,5 +12,11 @@ export class Book extends BaseEntity {
   isbn!: string;
 
   @Column()
-  publishedAt!: Date
+  publishedAt!: Date;
+
+  @CreateDateColumn({type: 'timestamp without time zone'})
+  createdAt!: Date;
+
+  @UpdateDateColumn({type: 'timestamp without time zone'})
+  updatedAt!: Date;
 }

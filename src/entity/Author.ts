@@ -1,4 +1,4 @@
-import { BaseEntity, Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { BaseEntity, Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
 
 @Entity()
 export class Author extends BaseEntity {
@@ -10,4 +10,10 @@ export class Author extends BaseEntity {
 
   @Column()
   lastName!: string;
+
+  @CreateDateColumn({type: 'timestamp without time zone'})
+  createdAt!: Date;
+
+  @UpdateDateColumn({type: 'timestamp without time zone'})
+  updatedAt!: Date;
 }

@@ -21,7 +21,7 @@
       "tsc": "tsc",
       "build": "tsc",
       "start": "node --inspect=9229 build/index.js",
-      "orm": "typeorm",
+      "typeorm": "typeorm",
       "start:dev": "yarn build && yarn start"
    },
    "devDependencies": {
