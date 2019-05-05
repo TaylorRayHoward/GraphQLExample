@@ -1,22 +1,24 @@
 import { Field, ObjectType } from 'type-graphql';
-import { AuthorType } from './AuthorType';
 
 @ObjectType()
-export class BookType {
+export class LibraryType {
   @Field()
   id!: string;
 
   @Field()
-  title!: string;
+  name!: string;
 
   @Field()
-  isbn!: string;
+  state!: string;
 
   @Field()
-  publishedAt!: string;
+  street!: string;
 
-  @Field(type => [AuthorType])
-  authors!: AuthorType[];
+  @Field()
+  city!: string;
+
+  @Field()
+  zip!: string;
 
   @Field()
   createdAt!: Date;

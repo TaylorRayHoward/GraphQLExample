@@ -23,9 +23,9 @@ export class Author extends BaseEntity {
   @OneToMany(type => AuthorBook, ab => ab.author)
   authorBooks!: AuthorBook[];
 
-  @CreateDateColumn({ type: 'timestamp' })
+  @CreateDateColumn({ type: 'timestamptz' })
   createdAt!: Date;
 
-  @UpdateDateColumn({ type: 'timestamp' })
+  @UpdateDateColumn({ type: 'timestamptz' })
   updatedAt!: Date;
 }

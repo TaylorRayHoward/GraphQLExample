@@ -7,27 +7,29 @@ import {
   PrimaryGeneratedColumn,
   UpdateDateColumn
 } from 'typeorm';
-import { AuthorBook } from './AuthorBook';
 import { LibraryBook } from './LibraryBook';
 
 @Entity()
-export class Book extends BaseEntity {
+export class Library extends BaseEntity {
   @PrimaryGeneratedColumn('uuid')
   id!: string;
 
   @Column()
-  title!: string;
+  name!: string;
 
   @Column()
-  isbn!: string;
+  state!: string;
 
-  @Column({ type: 'date' })
-  publishedAt!: Date;
+  @Column()
+  street!: string;
 
-  @OneToMany(type => AuthorBook, ab => ab.book)
-  authorBooks!: AuthorBook[];
+  @Column()
+  city!: string;
 
-  @OneToMany(type => LibraryBook, lb => lb.book)
+  @Column()
+  zip!: string;
+
+  @OneToMany(type => LibraryBook, lb => lb.library)
   libraryBooks!: LibraryBook[];
 
   @CreateDateColumn({ type: 'timestamptz' })

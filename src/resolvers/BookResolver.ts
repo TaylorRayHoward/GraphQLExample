@@ -10,7 +10,7 @@ import { AuthorBook } from '../entity/AuthorBook';
 export class BookResolver {
   @Query(returns => [BookType])
   async books(): Promise<Book[]> {
-    return Book.find();
+    return await Book.find();
   }
 
   @Query(returns => BookType, { nullable: true })
