@@ -11,7 +11,7 @@ export class AuthorBook extends BaseEntity {
   bookId!: string;
 
   @ManyToOne(type => Book, book => book.authorBooks, { primary: true })
-  @JoinColumn({ name: 'book_id ' })
+  @JoinColumn({ name: 'book_id' })
   book!: Book;
 
   @ManyToOne(type => Author, author => author.authorBooks, { primary: true })
