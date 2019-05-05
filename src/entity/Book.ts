@@ -1,4 +1,13 @@
-import { BaseEntity, Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn } from 'typeorm';
+import {
+  BaseEntity,
+  Column,
+  CreateDateColumn,
+  Entity,
+  OneToMany,
+  PrimaryGeneratedColumn,
+  UpdateDateColumn
+} from 'typeorm';
+import { AuthorBook } from './AuthorBook';
 
 @Entity()
 export class Book extends BaseEntity {
@@ -13,6 +22,9 @@ export class Book extends BaseEntity {
 
   @Column()
   publishedAt!: Date;
+
+  @OneToMany(type => AuthorBook, ab => ab.book)
+  authorBooks!: AuthorBook[];
 
   @CreateDateColumn({type: 'timestamp'})
   createdAt!: Date;
