@@ -9,6 +9,7 @@ import { Library } from '../entity/Library';
 import { LibraryType } from '../types/LibraryType';
 import { In } from 'typeorm';
 import { LibraryBook } from '../entity/LibraryBook';
+import { BookInputType } from '../types/BookInputType';
 
 @Resolver(AuthorType)
 export class AuthorResolver {
@@ -39,6 +40,25 @@ export class AuthorResolver {
     author.lastName = data.lastName;
     author.firstName = data.firstName;
     return author.save();
+  }
+
+  @Mutation(returns => AuthorType)
+  async addBook(@Arg('id') id: string, @Arg('bookData') data: BookInputType): Promise<Author> {
+    const book = new Book();
+    const author = await Author.findOne(id);
+    if (!author) {
+      throw new Error('author not found');
+    }
+    for (const [key, val] of Object.entries(data)) {
+      (book as any)[key] = val;
+    }
+    const savedBook = await book.save();
+    const authorBook = new AuthorBook();
+    authorBook.bookId = savedBook.id;
+    authorBook.authorId = id;
+    await authorBook.save();
+
+    return author;
   }
 
   @FieldResolver(returns => BookType)

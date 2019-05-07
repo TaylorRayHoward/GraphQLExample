@@ -21,15 +21,6 @@ export class BookResolver {
     return Book.findOne(id);
   }
 
-  @Mutation(returns => BookType)
-  async addBook(@Arg('book') data: BookInputType): Promise<Book> {
-    const book = new Book();
-    book.isbn = data.isbn;
-    book.title = data.title;
-    book.publishedAt = data.publishedAt;
-    return book.save();
-  }
-
   @FieldResolver(returns => [AuthorType])
   async authors(@Root() book: BookType): Promise<Author[]> {
     const authors = await AuthorBook.find({ where: { bookId: book.id }, relations: ['author'] });

@@ -1,4 +1,4 @@
-import { Arg, FieldResolver, Query, Resolver, Root } from 'type-graphql';
+import { Arg, FieldResolver, Mutation, Query, Resolver, Root } from 'type-graphql';
 import { LibraryType } from '../types/LibraryType';
 import { Library } from '../entity/Library';
 import { BookType } from '../types/BookType';
@@ -8,6 +8,7 @@ import { AuthorType } from '../types/AuthorType';
 import { AuthorBook } from '../entity/AuthorBook';
 import { In } from 'typeorm'
 import { Author } from '../entity/Author';
+import { LibraryInputType } from '../types/LibraryInputType';
 
 @Resolver(type => LibraryType)
 export class LibraryResolver {
@@ -20,6 +21,15 @@ export class LibraryResolver {
   @Query(returns => LibraryType, { nullable: true })
   async library(@Arg('id') id: string): Promise<Library | undefined> {
     return Library.findOne(id);
+  }
+
+  @Mutation(returns => LibraryType)
+  async addLibrary(@Arg('libraryData') data: LibraryInputType): Promise<Library> {
+    const library = new Library();
+    for(const [key, value] of Object.entries(data)) {
+      (library as any)[key] = value;
+    }
+    return library.save();
   }
 
   @FieldResolver(returns => [BookType])
