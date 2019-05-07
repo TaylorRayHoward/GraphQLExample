@@ -6,7 +6,7 @@ import { Book } from '../entity/Book';
 import { LibraryBook } from '../entity/LibraryBook';
 import { AuthorType } from '../types/AuthorType';
 import { AuthorBook } from '../entity/AuthorBook';
-import { In } from 'typeorm'
+import { In } from 'typeorm';
 import { Author } from '../entity/Author';
 import { LibraryInputType } from '../types/LibraryInputType';
 
@@ -26,10 +26,28 @@ export class LibraryResolver {
   @Mutation(returns => LibraryType)
   async addLibrary(@Arg('libraryData') data: LibraryInputType): Promise<Library> {
     const library = new Library();
-    for(const [key, value] of Object.entries(data)) {
+    for (const [key, value] of Object.entries(data)) {
       (library as any)[key] = value;
     }
     return library.save();
+  }
+
+  @Mutation(returns => LibraryType)
+  async addBookToLibrary(@Arg('libraryId') libraryId: string, @Arg('bookId') bookId: string): Promise<Library> {
+    const library = await Library.findOne(libraryId);
+    if (!library) {
+      throw new Error('library not found');
+    }
+    const book = await Book.findOne(bookId);
+    if (!book) {
+      throw new Error('book not found');
+    }
+
+    const libraryBook = new LibraryBook();
+    libraryBook.bookId = bookId;
+    libraryBook.libraryId = libraryId;
+    await libraryBook.save();
+    return library;
   }
 
   @FieldResolver(returns => [BookType])
@@ -63,6 +81,6 @@ export class LibraryResolver {
       where: {
         id: In(unique)
       }
-    })
+    });
   }
 }
