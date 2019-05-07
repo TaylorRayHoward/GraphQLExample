@@ -5,6 +5,10 @@ import { AuthorInputType } from '../types/AuthorInputType';
 import { BookType } from '../types/BookType';
 import { Book } from '../entity/Book';
 import { AuthorBook } from '../entity/AuthorBook';
+import { Library } from '../entity/Library';
+import { LibraryType } from '../types/LibraryType';
+import { In } from 'typeorm';
+import { LibraryBook } from '../entity/LibraryBook';
 
 @Resolver(AuthorType)
 export class AuthorResolver {
@@ -37,9 +41,32 @@ export class AuthorResolver {
     return author.save();
   }
 
-  @FieldResolver()
-  async books(@Root() author: BookType): Promise<Book[]> {
+  @FieldResolver(returns => BookType)
+  async books(@Root() author: AuthorType): Promise<Book[]> {
     const authors = await AuthorBook.find({ where: { authorId: author.id }, relations: ['book'] });
     return authors.map(a => a.book);
+  }
+
+  @FieldResolver(returns => [LibraryType])
+  async libraries(@Root() author: AuthorType): Promise<Library[]> {
+    const bookIds = (await AuthorBook.find({
+      where: {
+        authorId: author.id
+      }
+    })).map(a => a.bookId);
+
+    const unique = [...new Set(bookIds)];
+
+    return (await LibraryBook.find({
+      where: {
+        bookId: In(unique)
+      },
+      relations: ['library']
+    })).map(l => l.library).reduce((arr: any[], item: Library) => {
+      if (arr.find(i => i.id === item.id)) {
+        return arr;
+      }
+      return [...arr, item];
+    }, []);
   }
 }

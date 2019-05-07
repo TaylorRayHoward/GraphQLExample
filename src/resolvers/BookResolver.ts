@@ -5,6 +5,9 @@ import { BookInputType } from '../types/BookInputType';
 import { AuthorType } from '../types/AuthorType';
 import { Author } from '../entity/Author';
 import { AuthorBook } from '../entity/AuthorBook';
+import { LibraryType } from '../types/LibraryType';
+import { Library } from '../entity/Library';
+import { LibraryBook } from '../entity/LibraryBook';
 
 @Resolver(type => BookType)
 export class BookResolver {
@@ -31,6 +34,22 @@ export class BookResolver {
   async authors(@Root() book: BookType): Promise<Author[]> {
     const authors = await AuthorBook.find({ where: { bookId: book.id }, relations: ['author'] });
     return authors.map(a => a.author);
+  }
+
+  @FieldResolver(returns => [LibraryType])
+  async libraries(@Root() book: BookType): Promise<Library[]> {
+    return (await LibraryBook.find({
+      where: {
+        bookId: book.id
+      },
+      relations: ['library']
+    })).map(l => l.library).reduce((arr: Library[], item: Library) => {
+      if (arr.find(l => l.id === item.id)) {
+        return arr;
+      }
+      return [...arr, item];
+    }, []);
+
   }
 
 }
