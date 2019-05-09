@@ -2,7 +2,7 @@ import React from 'react';
 import { Query } from 'react-apollo';
 import { libraryByIdWithAuthors } from './queries';
 import { Grid, Typography, withStyles } from '@material-ui/core';
-import AuthorList from '../Author/AuthorList';
+import { AuthorList } from '../Author';
 
 const styles = theme => ({
   container: {
