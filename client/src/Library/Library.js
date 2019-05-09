@@ -1,9 +1,38 @@
 import React from 'react';
+import { Query } from 'react-apollo';
+import { libraryByIdWithAuthors } from './queries';
+import { Grid, Typography, withStyles } from '@material-ui/core';
+import AuthorList from '../Author/AuthorList';
 
-const Library = () => {
+const styles = theme => ({
+  container: {
+    paddingBottom: '1rem'
+  }
+});
+
+const Library = ({ match: { params: { id } }, classes }) => {
   return (
-    <h1>Hello!</h1>
-  )
+    <Query query={libraryByIdWithAuthors} variables={{ id }}>
+      {({ loading, error, data }) => {
+        if (loading) {
+          return (
+            <h1>Loading...</h1>
+          );
+        }
+        return (
+          <Grid container
+                justify="center"
+                alignItems="center"
+          >
+            <Typography variant="h3" className={classes.container}>
+              {data.library.name}
+            </Typography>
+            <AuthorList authors={data.library.authors} />
+          </Grid>
+        );
+      }}
+    </Query>
+  );
 };
 
-export default Library;
+export default withStyles(styles)(Library);

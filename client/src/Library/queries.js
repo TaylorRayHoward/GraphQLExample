@@ -12,3 +12,15 @@ query {
   }
 }
 `;
+
+export const libraryByIdWithAuthors = gql`
+query($id: String!) {
+  library(id: $id) {
+    name
+    authors {
+      id
+      fullName
+    }
+  }
+}
+`;

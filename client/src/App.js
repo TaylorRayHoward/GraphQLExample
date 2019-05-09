@@ -6,8 +6,8 @@ import { Library, LibraryList } from './Library';
 const App = () => {
   return (
     <>
-      <Header />
       <BrowserRouter>
+        <Header />
         <Switch>
           <Route path="/" exact component={LibraryList} />
           <Route path="/library/:id" component={Library} />
