@@ -21,7 +21,6 @@ ReactDOM.render(
     <MuiThemeProvider theme={theme}>
       <App />
     </MuiThemeProvider>
-  </ApolloProvider>
-  ,
+  </ApolloProvider>,
   document.getElementById('root')
 );

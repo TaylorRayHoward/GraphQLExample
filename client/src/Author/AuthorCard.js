@@ -1,5 +1,4 @@
 import React from 'react';
-import { Card, CardContent, CardHeader, withStyles } from '@material-ui/core';
 import ExpansionPanelDetails from '@material-ui/core/ExpansionPanelDetails';
 import Typography from '@material-ui/core/Typography';
 import ExpansionPanelSummary from '@material-ui/core/ExpansionPanelSummary';
@@ -8,11 +7,8 @@ import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import Query from 'react-apollo/Query';
 import { booksForAuthor } from './queries';
 import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import List from '@material-ui/core/List';
-
-const styles = theme => ({});
 
 const AuthorCard = ({ author, classes }) => {
   return (
@@ -47,4 +43,4 @@ const AuthorCard = ({ author, classes }) => {
   );
 };
 
-export default withStyles(styles)(AuthorCard);
+export default AuthorCard;
